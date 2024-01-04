@@ -1,5 +1,6 @@
 import React, { useState, ChangeEvent } from 'react'
 import { useCountrySearch } from '../hooks/useCountrySearch'
+import { debounce } from '../utils/utils'
 
 interface Country {
   name: string
@@ -9,9 +10,13 @@ const LiveSearch: React.FC = () => {
   const [query, setQuery] = useState<string>('')
   const { data, isLoading, isError } = useCountrySearch(query)
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.target.value)
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target.value)
+    setQuery(event.target.value)
+    console.log(query)
   }
+
+  const debouncedHandleInputChange = debounce(handleInputChange, 1000)
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -19,8 +24,7 @@ const LiveSearch: React.FC = () => {
         className="border border-gray-300 rounded-md p-2 w-64"
         type="text"
         placeholder="Search for a country"
-        value={query}
-        onChange={handleInputChange}
+        onChange={debouncedHandleInputChange}
       />
       {isLoading && <div>Loading...</div>}
       {isError && <div>Something went wrong...</div>}
