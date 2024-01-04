@@ -1,4 +1,5 @@
 import React, { useState, ChangeEvent, useEffect } from 'react'
+import Modal from './Modal'
 import { useCountrySearch } from '../hooks/useCountrySearch'
 import { debounce, formatPopulation } from '../utils/utils'
 import { FaSearch } from 'react-icons/fa'
@@ -10,13 +11,16 @@ interface Country {
   region: string
   population: number
   flag: string
+  capital: string
 }
 
 const LiveSearch: React.FC = () => {
   const [query, setQuery] = useState<string>('')
   const [selectedOption, setSelectedOption] = useState<string>('')
+  const [selectedCountry, setSelectedCountry] = useState<string>('')
   const { data, isLoading, isError } = useCountrySearch(query)
   const [sortedData, setSortedData] = useState<Country[] | null>([])
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 
   // This effect main purpose is to sort the data based on the selected option
   useEffect(() => {
@@ -54,6 +58,13 @@ const LiveSearch: React.FC = () => {
     setSelectedOption(event.target.value)
   }
 
+  // This function will be called every time the user clicks on a country
+  const handleCountrySelect = (country: Country) => () => {
+    const capitalName = country.capital
+    setSelectedCountry(capitalName)
+    setIsModalOpen(true)
+  }
+
   return (
     <div className="flex flex-col w-full">
       {/* Search input */}
@@ -84,7 +95,7 @@ const LiveSearch: React.FC = () => {
       </form>
 
       {/* Search results */}
-      <div className="mt-4">
+      <section className="mt-8">
         {/* Loading */}
         {isLoading && (
           <div className="flex justify-center items-center">
@@ -104,15 +115,20 @@ const LiveSearch: React.FC = () => {
         <div className="mt-4 grid grid-cols-2 lg:grid-cols-4 gap-4 transition-all duration-500 ease-in-out">
           {data &&
             sortedData?.map((country: Country) => (
-              <div key={country.name} className="p-4 border border-gray-300 rounded-md">
+              <article
+                onClick={handleCountrySelect(country)}
+                key={country.name}
+                className="p-4 border border-gray-300 rounded-md">
                 <img src={country.flag} alt={country.name} className="w-full h-32 object-cover mb-2" />
                 <h3 className="text-md font-bold">{country.name}</h3>
                 <p className="text-sm">{country.region}</p>
                 <p className="text-sm">{formatPopulation(country.population)}</p>
-              </div>
+              </article>
             ))}
         </div>
-      </div>
+      </section>
+      {/* Modal */}
+      {isModalOpen && <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} query={selectedCountry} />}
     </div>
   )
 }
