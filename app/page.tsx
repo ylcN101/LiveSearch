@@ -7,7 +7,7 @@ export default function Home() {
   const queryClient = new QueryClient()
   return (
     <>
-      <main className=" h-screen overflow-y-auto">
+      <main className="h-screen overflow-y-auto">
         <nav>
           <Nav />
         </nav>
