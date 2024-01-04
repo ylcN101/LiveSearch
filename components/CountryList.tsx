@@ -9,7 +9,7 @@ interface CountryListProps {
 
 const CountryList: React.FC<CountryListProps> = ({ countries, onCountrySelect }) => {
   return (
-    <div className="mt-4 grid grid-cols-2 lg:grid-cols-4 gap-4 transition-all duration-500 ease-in-out">
+    <div className="mt-4 grid max-sm:grid-cols-1 grid-cols-2 lg:grid-cols-4 gap-4 transition-all duration-500 ease-in-out">
       {countries.map((country) => (
         <article
           onClick={() => onCountrySelect(country)}

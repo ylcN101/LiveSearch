@@ -44,7 +44,7 @@ const LiveSearch: React.FC = () => {
   return (
     <div className="flex flex-col w-full">
       {/* Search input */}
-      <form className="flex gap-4">
+      <form className="flex flex-col gap-4 sm:flex-row">
         <div className="flex justify-center items-center relative">
           <input
             className="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg focus:outline-none font-bold"
@@ -58,17 +58,20 @@ const LiveSearch: React.FC = () => {
         </div>
 
         {/* Select */}
-        <select
-          className="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg focus:outline-none font-bold"
-          value={selectedOption}
-          onChange={handleSelectChange}>
-          <option value="" disabled hidden>
-            Sort by...
-          </option>
-          <option value="region">Sort by Region</option>
-          <option value="name">Sort by Name</option>
-          <option value="population">Sort by Population</option>
-        </select>
+        <div className="flex items-center justify-center">
+          <select
+            className="border-2 border-gray-300 bg-white h-10 px-3 pr-10 rounded-lg focus:outline-none font-bold"
+            value={selectedOption}
+            onChange={handleSelectChange}>
+            <option value="" disabled hidden>
+              Sort by...
+            </option>
+            <option value="region">Sort by Region</option>
+            <option value="name">Sort by Name</option>
+            <option value="population">Sort by Population</option>
+          </select>
+        </div>
+
         {/* reset button */}
       </form>
 

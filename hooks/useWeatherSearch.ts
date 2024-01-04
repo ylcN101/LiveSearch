@@ -1,4 +1,5 @@
 import { useQuery, UseQueryResult } from 'react-query'
+import { isAxiosError } from 'axios'
 import axios from 'axios'
 import { CurrentWeather } from '../types/types'
 
@@ -15,12 +16,10 @@ const fetchWeather = async (cityName: string): Promise<WeatherData> => {
     const response = await axios.get<WeatherData>(apiUrl)
     return response.data
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      const message = error.response?.data?.message || 'An error occurred'
-      throw new Error(message)
-    } else {
-      throw new Error('Failed to fetch weather')
+    if (isAxiosError(error)) {
+      throw new Error(error.response?.data?.message ?? 'An error occurred')
     }
+    throw new Error('An error occurred')
   }
 }
 

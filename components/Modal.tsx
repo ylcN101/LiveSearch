@@ -17,7 +17,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, query }) => {
 
   return (
     <div className="fixed inset-0 bg-gray-900 bg-opacity-90 flex justify-center items-center ">
-      <div className="bg-white rounded-lg p-8 relative">
+      <div className="bg-white rounded-lg p-16 relative">
         <span>
           <IoCloseSharp size={25} className="text-black absolute top-2 right-2 cursor-pointer" onClick={onClose} />
         </span>
