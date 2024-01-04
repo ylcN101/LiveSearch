@@ -10,12 +10,14 @@ interface FetchCountriesResult {
 }
 
 //This is a custom hook that uses react-query to fetch data from the restcountries API
+
+//The reason we are using react-query is because it has a lot of built in features that make it easy to handle fetching data
+//It also has a lot of features that make it easy to handle caching, error handling, and more
+
 export function useCountrySearch(query: string): UseQueryResult<Country[], Error> {
   const fetchCountries = async (searchTerm: string): Promise<Country[]> => {
-    console.log('searchTerm:', searchTerm)
     try {
       const { data }: FetchCountriesResult = await axios.get(`https://restcountries.com/v2/name/${searchTerm}`)
-      console.log('data:', data)
       return data
     } catch (error) {
       throw new Error('Error fetching data')
