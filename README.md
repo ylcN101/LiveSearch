@@ -1,17 +1,45 @@
+# Country Search and Weather Forecast App
 
-## Getting Started
+## Description
 
-First, run the development server:
+This application allows users to search for countries and view detailed information, including population, region, and capital. Additionally, users can view the current weather forecast for each country's capital.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Search for countries by name.
+- View country details including population, region, and flag.
+- Sort countries by name, region, or population.
+- View the current weather forecast for the capital city of each country.
 
+## Technologies Used
+
+- React
+- TypeScript
+- Axios for API requests
+- React Query for data fetching and state management
+- React Icons for UI enhancement
+- CSS for styling
+
+## Setup and Installation
+
+To run this project locally, follow these steps:
+
+1. Clone the repository:
+
+   ```bash
+   git clone [repository URL]
+   ```
+
+2. Install the dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+
+   ```bash
+    npm start
+   ```
+
+4. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
