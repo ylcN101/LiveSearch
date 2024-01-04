@@ -14,7 +14,7 @@ This application allows users to search for countries and view detailed informat
 - View the current weather forecast for the capital city of each country.
 
 ## Technologies Used
-
+- Next.js
 - React
 - TypeScript
 - Axios for API requests
