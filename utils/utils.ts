@@ -22,3 +22,18 @@ export const formatPopulation = (num: number): string => {
   }
   return num.toString()
 }
+
+//This function sorts the countries based on the option selected
+export const sortCountries = (countries: any[], option: string): any[] => {
+  let sorted = [...countries]
+  switch (option) {
+    case 'region':
+      return sorted.sort((a, b) => a.region.localeCompare(b.region))
+    case 'name':
+      return sorted.sort((a, b) => a.name.localeCompare(b.name))
+    case 'population':
+      return sorted.sort((a, b) => b.population - a.population)
+    default:
+      return sorted
+  }
+}

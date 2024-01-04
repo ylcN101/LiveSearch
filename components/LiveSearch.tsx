@@ -1,18 +1,12 @@
 import React, { useState, ChangeEvent, useEffect } from 'react'
 import Modal from './Modal'
 import { useCountrySearch } from '../hooks/useCountrySearch'
-import { debounce, formatPopulation } from '../utils/utils'
+import CountryList from './CountryList'
+import { debounce, sortCountries } from '../utils/utils'
 import { FaSearch } from 'react-icons/fa'
 import { MdError } from 'react-icons/md'
 import { MagnifyingGlass } from 'react-loader-spinner'
-
-interface Country {
-  name: string
-  region: string
-  population: number
-  flag: string
-  capital: string
-}
+import { Country } from '../types/types'
 
 const LiveSearch: React.FC = () => {
   const [query, setQuery] = useState<string>('')
@@ -25,24 +19,7 @@ const LiveSearch: React.FC = () => {
   // This effect main purpose is to sort the data based on the selected option
   useEffect(() => {
     if (!data) return
-
-    let sorted = [...data]
-
-    switch (selectedOption) {
-      case 'region':
-        sorted.sort((a, b) => (a.region > b.region ? 1 : -1))
-        break
-      case 'name':
-        sorted.sort((a, b) => (a.name > b.name ? 1 : -1))
-        break
-      case 'population':
-        sorted.sort((a, b) => (a.population > b.population ? 1 : -1))
-        break
-      default:
-        break
-    }
-
-    setSortedData(sorted as Country[])
+    setSortedData(data ? sortCountries(data, selectedOption) : [])
   }, [data, selectedOption])
 
   // This function will be called every time the input changes
@@ -59,9 +36,8 @@ const LiveSearch: React.FC = () => {
   }
 
   // This function will be called every time the user clicks on a country
-  const handleCountrySelect = (country: Country) => () => {
-    const capitalName = country.capital
-    setSelectedCountry(capitalName)
+  const handleCountrySelect = (country: Country) => {
+    setSelectedCountry(country.capital)
     setIsModalOpen(true)
   }
 
@@ -80,6 +56,7 @@ const LiveSearch: React.FC = () => {
             <FaSearch />
           </span>
         </div>
+
         {/* Select */}
         <select
           className="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg focus:outline-none font-bold"
@@ -92,6 +69,7 @@ const LiveSearch: React.FC = () => {
           <option value="name">Sort by Name</option>
           <option value="population">Sort by Population</option>
         </select>
+        {/* reset button */}
       </form>
 
       {/* Search results */}
@@ -102,6 +80,7 @@ const LiveSearch: React.FC = () => {
             <MagnifyingGlass color="#000" height={80} width={80} />
           </div>
         )}
+
         {/* Error */}
         {isError && (
           <div className="flex justify-center items-center">
@@ -111,22 +90,13 @@ const LiveSearch: React.FC = () => {
             </span>
           </div>
         )}
+
         {/* Data */}
-        <div className="mt-4 grid grid-cols-2 lg:grid-cols-4 gap-4 transition-all duration-500 ease-in-out">
-          {data &&
-            sortedData?.map((country: Country) => (
-              <article
-                onClick={handleCountrySelect(country)}
-                key={country.name}
-                className="p-4 border border-gray-300 rounded-md">
-                <img src={country.flag} alt={country.name} className="w-full h-32 object-cover mb-2" />
-                <h3 className="text-md font-bold">{country.name}</h3>
-                <p className="text-sm">{country.region}</p>
-                <p className="text-sm">{formatPopulation(country.population)}</p>
-              </article>
-            ))}
-        </div>
+        {!isLoading && !isError && sortedData && (
+          <CountryList countries={sortedData || []} onCountrySelect={handleCountrySelect} />
+        )}
       </section>
+
       {/* Modal */}
       {isModalOpen && <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} query={selectedCountry} />}
     </div>

@@ -1,12 +1,6 @@
 import { useQuery, UseQueryResult } from 'react-query'
+import { Country } from '../types/types'
 import axios, { isAxiosError } from 'axios'
-
-interface Country {
-  name: string
-  region: string
-  population: number
-  flag: string
-}
 
 interface FetchCountriesResult {
   data: Country[]
