@@ -9,6 +9,7 @@ interface Country {
   name: string
   region: string
   population: number
+  flag: string
 }
 
 const LiveSearch: React.FC = () => {
@@ -17,6 +18,7 @@ const LiveSearch: React.FC = () => {
   const { data, isLoading, isError } = useCountrySearch(query)
   const [sortedData, setSortedData] = useState<Country[] | null>([])
 
+  // This effect main purpose is to sort the data based on the selected option
   useEffect(() => {
     if (!data) return
 
@@ -45,16 +47,15 @@ const LiveSearch: React.FC = () => {
   }
 
   // This function will be debounced
-  const debouncedHandleInputChange = debounce(handleInputChange, 500)
+  const debouncedHandleInputChange = debounce(handleInputChange, 1000)
 
   // This function will be called every time the select changes
   const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(event.target.value)
-    console.log(event.target.value)
   }
 
   return (
-    <>
+    <div className="flex flex-col w-full">
       {/* Search input */}
       <form className="flex gap-4">
         <div className="flex justify-center items-center relative">
@@ -68,6 +69,7 @@ const LiveSearch: React.FC = () => {
             <FaSearch />
           </span>
         </div>
+        {/* Select */}
         <select
           className="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg focus:outline-none font-bold"
           value={selectedOption}
@@ -81,16 +83,15 @@ const LiveSearch: React.FC = () => {
         </select>
       </form>
 
-      {/* Select */}
-
       {/* Search results */}
       <div className="mt-4">
+        {/* Loading */}
         {isLoading && (
           <div className="flex justify-center items-center">
             <MagnifyingGlass color="#000" height={80} width={80} />
           </div>
         )}
-
+        {/* Error */}
         {isError && (
           <div className="flex justify-center items-center">
             <span className="mr-2">Country not found</span>
@@ -99,11 +100,12 @@ const LiveSearch: React.FC = () => {
             </span>
           </div>
         )}
-
+        {/* Data */}
         <div className="mt-4 grid grid-cols-2 lg:grid-cols-4 gap-4 transition-all duration-500 ease-in-out">
           {data &&
             sortedData?.map((country: Country) => (
               <div key={country.name} className="p-4 border border-gray-300 rounded-md">
+                <img src={country.flag} alt={country.name} className="w-full h-32 object-cover mb-2" />
                 <h3 className="text-md font-bold">{country.name}</h3>
                 <p className="text-sm">{country.region}</p>
                 <p className="text-sm">{formatPopulation(country.population)}</p>
@@ -111,7 +113,7 @@ const LiveSearch: React.FC = () => {
             ))}
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
