@@ -29,7 +29,7 @@ To run this project locally, follow these steps:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/ylcN101/LiveSearch
+   git clone https://github.com/ylcN101/LiveSearch.git
    ```
 
 2. Install the dependencies:
