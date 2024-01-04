@@ -60,7 +60,7 @@ const LiveSearch: React.FC = () => {
         {/* Select */}
         <div className="flex items-center justify-center">
           <select
-            className="border-2 border-gray-300 bg-white h-10 px-3 pr-10 rounded-lg focus:outline-none font-bold"
+            className="border-2 border-gray-300 bg-white h-10 px-3 pr-10 rounded-lg focus:outline-none font-bold cursor-pointer"
             value={selectedOption}
             onChange={handleSelectChange}>
             <option value="" disabled hidden>
