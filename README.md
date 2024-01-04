@@ -20,7 +20,7 @@ This application allows users to search for countries and view detailed informat
 - Axios for API requests
 - React Query for data fetching and state management
 - React Icons for UI enhancement
-- CSS for styling
+- Tailwind for styling
 
 ## Setup and Installation
 
@@ -29,7 +29,7 @@ To run this project locally, follow these steps:
 1. Clone the repository:
 
    ```bash
-   git clone [repository URL]
+   git clone https://github.com/ylcN101/LiveSearch
    ```
 
 2. Install the dependencies:
