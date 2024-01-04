@@ -3,6 +3,8 @@ import axios, { isAxiosError } from 'axios'
 
 interface Country {
   name: string
+  region: string
+  population: number
 }
 
 interface FetchCountriesResult {
