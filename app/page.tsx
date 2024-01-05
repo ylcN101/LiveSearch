@@ -1,4 +1,5 @@
 'use client'
+import React from 'react'
 import LiveSearch from '../components/LiveSearch'
 import Nav from '../components/Nav'
 import { QueryClient, QueryClientProvider } from 'react-query'
