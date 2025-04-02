@@ -10,7 +10,6 @@ interface WeatherData {
 // This function is responsible for fetching the weather data from the API
 
 const fetchWeather = async (cityName: string): Promise<WeatherData> => {
-  const apiKey = '327b017e746e450fa1f80145230412'
   const apiUrl = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${cityName}`
   try {
     const response = await axios.get<WeatherData>(apiUrl)
